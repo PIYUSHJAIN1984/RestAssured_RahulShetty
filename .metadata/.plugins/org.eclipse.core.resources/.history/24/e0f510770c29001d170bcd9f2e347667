@@ -1,0 +1,66 @@
+package stepDefinations;
+
+import static io.restassured.RestAssured.given;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.testng.Assert;
+import io.cucumber.java.en.*;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import io.restassured.specification.*;
+import resources.APIResources;
+import resources.TestDataBuild;
+import resources.Utils;
+
+public class stepDefinations extends Utils {
+	RequestSpecification res;
+	ResponseSpecification resSpec;
+	Response response;
+	TestDataBuild data = new TestDataBuild();
+	String place_ID;
+	JsonPath js;
+
+	@Given("AddPlace API Payload with {string} {string} {string}")
+	public void add_place_api_payload_with(String name, String language, String address) throws IOException {
+		res = given().spec(requestSpecification()).body(data.AddPlace_Payload(name, language, address));
+	}
+
+	@When("User Calls {string} using {string} http request")
+	public void user_calls_using_http_request(String resource, String method) {
+		
+		// Constructor will be called in below method of APIResources enum
+		APIResources resourcesAPI = APIResources.valueOf(resource);
+		System.out.println(resourcesAPI.getResource());
+
+		if (method.equalsIgnoreCase("POST"))
+			response = res.when().post(resourcesAPI.getResource());
+		else if (method.equalsIgnoreCase("GET"))
+			response = res.when().get(resourcesAPI.getResource());
+	}
+
+	@Then("API Call is success with status code {int}")
+	public void api_call_is_success_with_status_code(Integer int1) {
+		Assert.assertEquals(response.getStatusCode(), 200);
+
+	}
+
+	@Then("{string} in response body is {string}")
+	public void in_response_body_is(String key, String expectedValue) {
+		Assert.assertEquals(getJsonPath(response, key), expectedValue);
+	}
+	
+	@Then("verify place_ID created maps to {string} using {string}")
+	public void verify_place_id_created_maps_to_using(String name, String method) throws IOException {
+		//Request Spec
+		res = given().spec(requestSpecification()).queryParam("place_id", place_ID);
+		
+	getJsonPath(response,place_id);
+		
+		
+	  
+	}
+
+
+}

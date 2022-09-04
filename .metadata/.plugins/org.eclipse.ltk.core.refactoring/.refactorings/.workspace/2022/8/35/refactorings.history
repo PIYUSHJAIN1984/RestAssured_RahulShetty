@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;E2E_API_Framework&apos; to &apos;Sec17_E2E_API_Framework&apos;&#x0D;&#x0A;- Original element: &apos;E2E_API_Framework&apos;&#x0D;&#x0A;- Renamed element: &apos;E2E_API_Framework&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;E2E_API_Framework&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=E2E_API_Framework" name="Sec17_E2E_API_Framework" references="true" stamp="1661613981403" version="1.0"/>
+</session>

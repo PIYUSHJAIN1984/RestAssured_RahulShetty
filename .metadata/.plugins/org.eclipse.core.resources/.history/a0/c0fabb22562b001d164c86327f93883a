@@ -1,0 +1,85 @@
+Request method:	POST
+Request URI:	https://rahulshettyacademy.com/maps/api/place/add/json?key=qaclick123
+Proxy:			<none>
+Request params:	<none>
+Query params:	key=qaclick123
+Form params:	<none>
+Path params:	<none>
+Headers:		Accept=*/*
+				Content-Type=application/json
+Cookies:		<none>
+Multiparts:		<none>
+Body:
+{
+    "location": {
+        "lat": -38.3,
+        "lng": -45.3
+    },
+    "accuracy": 100,
+    "name": "Amit",
+    "phone_number": "09889999",
+    "address": "351 NS Road",
+    "types": [
+        "shoe park",
+        "park"
+    ],
+    "website": "www.google.com",
+    "language": "English"
+}
+HTTP/1.1 200 OK
+Date: Sat, 03 Sep 2022 07:00:20 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With
+Content-Length: 194
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: application/json;charset=UTF-8
+
+{
+    "status": "OK",
+    "place_id": "aad24fcb84cfe310dd43ea55087c3d62",
+    "scope": "APP",
+    "reference": "afef3b170713ffad477dcd41650cbac3afef3b170713ffad477dcd41650cbac3",
+    "id": "afef3b170713ffad477dcd41650cbac3"
+}
+Request method:	GET
+Request URI:	https://rahulshettyacademy.com/maps/api/place/get/json?key=qaclick123&place_id=aad24fcb84cfe310dd43ea55087c3d62
+Proxy:			<none>
+Request params:	<none>
+Query params:	key=qaclick123
+				place_id=aad24fcb84cfe310dd43ea55087c3d62
+Form params:	<none>
+Path params:	<none>
+Headers:		Accept=*/*
+				Content-Type=application/json
+Cookies:		<none>
+Multiparts:		<none>
+Body:			<none>
+HTTP/1.1 200 OK
+Date: Sat, 03 Sep 2022 07:00:21 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With
+Content-Length: 207
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: application/json;charset=UTF-8
+
+{
+    "location": {
+        "latitude": "-38.3",
+        "longitude": "-45.3"
+    },
+    "accuracy": "100",
+    "name": "Amit",
+    "phone_number": "09889999",
+    "address": "351 NS Road",
+    "types": "shoe park,park",
+    "website": "www.google.com",
+    "language": "English"
+}

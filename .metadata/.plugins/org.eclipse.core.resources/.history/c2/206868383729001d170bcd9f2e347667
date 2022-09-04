@@ -1,0 +1,9 @@
+package POJO;
+
+public class S4_DeletePlace_Body {
+	
+	private String place_id;
+	
+	
+
+}

@@ -1,0 +1,5 @@
+package POJO;
+
+public class S4_DeletePlace_Body {
+
+}

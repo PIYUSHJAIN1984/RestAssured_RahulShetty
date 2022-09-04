@@ -1,0 +1,82 @@
+package Sec14_78_eCommerceAPI;
+
+import static io.restassured.RestAssured.*;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
+import io.restassured.specification.RequestSpecification;
+
+public class S1_eCommerceLogin_AuthToken {
+
+	public static void main(String[] args) {
+
+		// Login API to get auth Token
+		S2_LoginRequest loginRequest = new S2_LoginRequest();
+		loginRequest.setUserEmail("PIYUSH@GMAIL.COM");
+		loginRequest.setUserPassword("Aabha@123");
+
+		RequestSpecification req = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.setContentType(ContentType.JSON).build();
+
+		RequestSpecification reqLogin = given().log().all().spec(req).body(loginRequest);
+		S3_LoginResponse loginResponse = reqLogin.when().post("/api/ecom/auth/login").then().log().all().extract()
+				.response().as(S3_LoginResponse.class);
+
+		String token = loginResponse.getToken();
+		System.out.println(token);
+		String userID = loginResponse.getUserId();
+		System.out.println(userID);
+
+		// Add Product
+		RequestSpecification addProductBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addHeader("Authorization", token).build();
+
+		RequestSpecification reqAddProduct = given().log().all().spec(addProductBaseReq).param("productName", "laptop")
+				.param("productAddedBy", userID).param("productCategory", "fashion")
+				.param("productSubCategory", "shirts").param("productPrice", 1000)
+				.param("productDescription", "Addias Originals").param("productFor", "men")
+				.multiPart("productImage", new File(
+						"C:\\Users\\PJain15\\RestAssured_RahulShetty\\4_DemoProject\\src\\Sec14_78_eCommerceAPI\\broccoli.jpg"));
+
+		String addProductResponse = reqAddProduct.when().post("/api/ecom/product/add-product").then().log().all()
+				.extract().response().asString();
+		
+		JsonPath js = new JsonPath(addProductResponse);
+		String productID = js.get("productId");
+
+		
+		// Place Order
+		S5_OrderDetails orderDetail = new S5_OrderDetails();
+		orderDetail.setCountry("India");
+		orderDetail.setProductOrderedId(productID);
+		
+		List<S5_OrderDetails> orderDetailList = new ArrayList<S5_OrderDetails>();
+		orderDetailList.add(orderDetail);
+		
+		S4_Orders orders = new S4_Orders();
+	     orders.setOrders(orderDetailList);
+		
+		RequestSpecification createOrderBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.setContentType(ContentType.JSON).addHeader("Authorization", token).build();
+		
+		RequestSpecification createOrderReq = given().spec(createOrderBaseReq).body(orders);
+		String responseAddOrder = createOrderReq.when().post("/api/ecom/order/create-order").then().log().all().extract().asString();
+		
+		
+		
+		
+		//Delete Product
+		RequestSpecification deleteProductBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com").addHeader("Authorization", token).build();
+		
+		RequestSpecification deleteProductReq = given().spec(deleteProductBaseReq);
+		deleteProductReq.when().delete("/api/ecom/product/delete-product/"+productID);
+		
+
+	}
+
+}

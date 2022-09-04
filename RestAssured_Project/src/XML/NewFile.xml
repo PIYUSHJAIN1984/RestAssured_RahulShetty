@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="pom2.xsd">
+	<student>
+		<id>101</id>
+		<firstname>Naman</firstname>
+		<lastname>Kumar</lastname>
+		<subject>Math</subject>
+		<marks>83</marks>
+	</student>
+</class>

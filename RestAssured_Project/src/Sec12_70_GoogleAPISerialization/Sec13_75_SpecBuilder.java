@@ -1,0 +1,56 @@
+package Sec12_70_GoogleAPISerialization;
+
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+
+import static io.restassured.RestAssured.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Sec13_75_SpecBuilder {
+
+	public static void main(String[] args) {
+
+		// Setting values of all the variables using set method for the body of json
+		S2_AddPlace_Body p = new S2_AddPlace_Body();
+		p.setAccuracy(100);
+		p.setAddress("351 NS Road");
+		p.setLanguage("English");
+		p.setLocation(null);
+		p.setName("Amit");
+		p.setPhone_number("09889999");
+		p.setTypes(null);
+		p.setWebsite("www.google.com");
+
+		List<String> myList = new ArrayList<String>();
+		myList.add("shoe park");
+		myList.add("park");
+		p.setTypes(myList);
+
+		S3_Location s = new S3_Location();
+		s.setLat(-38.3);
+		s.setLng(-45.3);
+		p.setLocation(s);
+
+		RequestSpecification reqSpec = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addQueryParam("key", "=qaclick123").setContentType(ContentType.JSON).build();
+
+		ResponseSpecification resSpec = new ResponseSpecBuilder().expectStatusCode(200)
+				.expectContentType(ContentType.JSON).build();
+
+		// Pass the object p created in above steps in the body
+		RequestSpecification res = given().spec(reqSpec).body(p);
+
+		Response response = res.when().log().all().post("/maps/api/place/add/json").then().spec(resSpec)
+				.extract().response();
+
+		String responseStr = response.asString();
+		System.out.println(responseStr);
+	}
+
+}

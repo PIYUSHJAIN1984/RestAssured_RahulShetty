@@ -1,0 +1,32 @@
+package resources;
+
+import java.io.PrintStream;
+
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+
+public class Utils {
+	RequestSpecification reqSpec;
+	ResponseSpecification resSpec;
+
+	public RequestSpecification requestSpecification() {
+		
+		PrintStream stream = new PrintStream(new FileOutputSteam(""));
+		
+		reqSpec = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addQueryParam("key", "=qaclick123").setContentType(ContentType.JSON)
+				.addFilter(RequestLoggingFilter.logRequestTo(null))
+				.build();
+
+		return reqSpec;
+	}
+	
+	public ResponseSpecification responseSpecification() {
+		resSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
+		return resSpec;
+	}
+}

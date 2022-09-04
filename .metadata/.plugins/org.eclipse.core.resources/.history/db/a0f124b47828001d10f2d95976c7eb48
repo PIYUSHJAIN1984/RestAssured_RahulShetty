@@ -1,0 +1,26 @@
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.html5.LocalStorage;
+import org.openqa.selenium.html5.WebStorage;
+import org.openqa.selenium.remote.Augmenter;
+
+public class TEE1 {
+
+	public static void main(String[] args) {
+
+		
+		System.setProperty("webdriver.chrome.driver",
+				"C:\\Users\\PJain15\\OneDrive - Schlumberger\\DOWNLOAD\\SLB\\Software\\Selenium_RahulShetty\\chromedriver.exe");
+
+		ChromeDriver driver = new ChromeDriver();
+		driver.get("https://fmp.qa.slb.com/#/home");
+		
+		WebStorage webStorage = (WebStorage) new Augmenter().augment(driver);
+		// using local storage
+		LocalStorage localStorage = webStorage.getLocalStorage();
+		localStorage.getItem("FMP_AUTH_AUTHORIZATIONDATA");
+
+		
+		
+	}
+
+}
